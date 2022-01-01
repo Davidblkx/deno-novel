@@ -1,7 +1,7 @@
 /** Allow to cancel a subscription */
 export interface ISubscription {
   /** Close subscription */
-  cancel(): void;
+  unsubscribe(): void;
   /** Get subscription status */
   get open(): boolean;
 }

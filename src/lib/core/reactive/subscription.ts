@@ -12,7 +12,7 @@ export class Subscription implements ISubscription {
     this.action = action;
   }
 
-  public cancel(): void {
+  public unsubscribe(): void {
     if (this._canceled) { return; }
     this._canceled = true;
     this.action();

@@ -40,7 +40,7 @@ export class Observable<T> implements IObservable<T>, IObserver<T> {
     if (this._isComplete) { return; }
     this._isComplete = true;
     this._subscribers.forEach((observer) => observer.complete());
-    for (const sub of [...this._subscribers.keys()]) { sub.cancel(); }
+    for (const sub of [...this._subscribers.keys()]) { sub.unsubscribe(); }
   }
 
   public nextAndComplete(value: T): void {
