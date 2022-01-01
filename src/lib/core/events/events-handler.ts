@@ -4,12 +4,12 @@ import type { DnEventsMap } from "./events.map.ts";
 
 import {
   ISubscription,
-  Observable,
+  Subject,
 } from '../reactive/__.ts';
 
 /** Push and subscribe to events */
 export class EventsHandler<T extends object> {
-  private readonly _events: Map<string, Observable<unknown>> = new Map();
+  private readonly _events: Map<string, Subject<unknown>> = new Map();
 
   /**
    * Emit a new event
@@ -18,12 +18,14 @@ export class EventsHandler<T extends object> {
    * @param data event data
    */
    public emit<K extends Keys<T>>(event: K, ...data: T[K] extends never ? [undefined?] : [T[K]]): void {
-    this.getObservable(event).next(data[0] as T[K]);
+    this.getSubject(event).next(data[0] as T[K]);
   }
 
   /** Subscribe to an event */
   public on<K extends Keys<T>>(event: K, callback: (data: T[K]) => void): ISubscription {
-    return this.getObservable<T[K]>(event).subscribe(callback);
+    return this.getSubject<T[K]>(event).subscribe({
+      next: callback,
+    });
   }
 
   /** Handles new types */
@@ -36,11 +38,11 @@ export class EventsHandler<T extends object> {
     return this as unknown as EventsHandler<U>;
   }
 
-  private getObservable<T>(event: string): Observable<T> {
+  private getSubject<T>(event: string): Subject<T> {
     if (!this._events.has(event)) {
-      this._events.set(event, new Observable());
+      this._events.set(event, new Subject());
     }
-    return this._events.get(event) as Observable<T>;
+    return this._events.get(event) as Subject<T>;
   }
 }
 

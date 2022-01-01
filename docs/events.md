@@ -2,7 +2,7 @@
 
 Events are used to notify the application of state changes and to trigger actions.
 
-### Triggering events
+## Triggering events
 
 ```ts
 import { DnEvents } from 'https://deno.land/x/deno-novel/mod.ts;
@@ -13,7 +13,7 @@ try {
   DnEvents.emit('exception', e);
 }
 ```
-### Listening for events
+## Listening for events
 
 ```ts
 import { DnEvents } from 'https://deno.land/x/deno-novel/mod.ts;
@@ -23,7 +23,7 @@ DnEvents.on('exception', (e: Error) => {
 });
 ```
 
-### Stop listening for events
+## Stop listening for events
 
 ```ts
 import { DnEvents } from 'https://deno.land/x/deno-novel/mod.ts;
@@ -37,7 +37,7 @@ DnEvents.on('initEnd', () => {
 });
 ```
 
-### Custom events and typings
+## Custom events and typings
 
 Events are fully typed, and by default only support internal events.
 There are two ways to emit/subscribe to custom events:
@@ -90,7 +90,7 @@ const handler = DnEvents.for<EvMap>();
 handler.emit('close');
 ```
 
-### Typing  with *for* vs *add*
+## Typing  with *for* vs *add*
 
  - *add* will merge a type with current one
  - *for* will replace the type
