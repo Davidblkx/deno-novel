@@ -3,7 +3,7 @@ import { ReplaySubject } from './replay-subject.ts';
 import { Subject } from './subject.ts';
 
 export function fromInterable<T>(interable: Iterable<T>): IObservable<T> {
-  return new ReplaySubject(Array.from(interable));
+  return new ReplaySubject(...Array.from(interable));
 }
 
 export function fromPromise<T>(promise: Promise<T>): IObservable<T> {

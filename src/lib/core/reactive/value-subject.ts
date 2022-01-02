@@ -1,7 +1,8 @@
+import type { IValueObservable } from "./models.ts";
 import { Subject } from './subject.ts';
 
 /** Like Subject but allways emit the last value to subscribers */
-export class ValueSubject<T> extends Subject<T> {
+export class ValueSubject<T> extends Subject<T> implements IValueObservable<T> {
   private _value: T;
 
   public get value(): T {

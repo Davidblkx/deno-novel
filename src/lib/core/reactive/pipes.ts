@@ -54,3 +54,29 @@ export function map<T, U>(mapper: (value: T) => U): IPipeable<T, U> {
     return obs;
   };
 }
+
+export function distinctUntilChanged<T>(comparer: (a?: T, b?: T) => boolean): IPipeable<T, T> {
+  return (observable: IObservable<T>): IObservable<T> => {
+    const obs = new Subject<T>();
+
+    let lastValue: T | undefined;
+
+    observable.subscribe({
+      next: (value) => {
+        if (!comparer(lastValue, value)) {
+          obs.next(value);
+        }
+
+        lastValue = value;
+      },
+      error: (error) => {
+        obs.error(error);
+      },
+      complete: () => {
+        obs.complete();
+      }
+    });
+
+    return obs;
+  };
+}

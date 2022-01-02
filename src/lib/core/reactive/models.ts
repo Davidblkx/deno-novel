@@ -34,4 +34,9 @@ export interface IObservable<T> {
   pipe<U>(pipeable: IPipeable<T, U>): IObservable<U>;
 }
 
+export interface IValueObservable<T> extends IObservable<T> {
+  /** Get current value */
+  get value(): T;
+}
+
 export type IPipeable<T, U> = (input: IObservable<T>) => IObservable<U>;

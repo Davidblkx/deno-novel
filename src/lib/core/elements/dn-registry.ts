@@ -16,7 +16,11 @@ export class IDenoNovelRegistry {
   public register<T extends DnElement<T>>(elem: Type<T>): void {
 
     // Get the definition
-    const definition = elem.prototype.definition;
+    const definition = elem.prototype.constructor.definition;
+
+    if (!definition) {
+      throw new Error(`Element ${elem.name} has no definition`);
+    }
 
     // Check if the definition is valid
     if (this._hasInit && this._elements.has(definition.tagName)) {
@@ -46,4 +50,4 @@ export class IDenoNovelRegistry {
 }
 
 /** Default element registry */
-export const DenoNovelRegistry = new IDenoNovelRegistry();
+export const DnRegistry = new IDenoNovelRegistry();

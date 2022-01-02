@@ -18,6 +18,7 @@ export class EventsHandler<T extends object> {
    * @param data event data
    */
    public emit<K extends Keys<T>>(event: K, ...data: T[K] extends never ? [undefined?] : [T[K]]): void {
+    if (!this._events.has(event)) return; // don't emit if no listeners
     this.getSubject(event).next(data[0] as T[K]);
   }
 
