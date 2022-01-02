@@ -1,0 +1,37 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+    {
+      "type": "deno",
+      "command": "test",
+      "problemMatcher": [
+        "$deno-test"
+      ],
+      "group": "test",
+      "label": "deno: test",
+      "args": [
+        "-A",
+        "--watch"
+      ]
+    },
+    {
+      "type": "deno",
+      "command": "install",
+      "group": "build",
+      "label": "deno: install cli app",
+      "args": [
+        "-A",
+        "-n",
+        "dn",
+        "-f",
+        "./app.ts"
+      ]
+    },
+    {
+      "type": "shell",
+      "command": "docsify serve ./docs",
+      "label": "docsify: generate docs",
+      "problemMatcher": []
+    }
+  ]
+}

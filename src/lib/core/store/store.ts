@@ -1,11 +1,17 @@
-import { IValueObservable } from '../reactive/models.ts';
+import { DnLogger } from '../logger/logger.ts';
+import {
+  IObservable,
+  ISubscription,
+  IValueObservable,
+} from '../reactive/models.ts';
+import { select } from '../reactive/pipes.ts';
+import { deepEqual } from './utils.ts';
 
 import type {
 Action,
   StoreState,
   StoreStateMap,
 } from './models.ts';
-
 export const GLOBAL_STORE_KEY = Symbol.for('__DENO_NOVEL_STORE__');
 
 /** State handler */
@@ -25,18 +31,33 @@ export class Store<T extends StoreState> {
     return this as unknown as Store<T & U>;
   }
 
-  public select<K extends keyof T>(key: K): IValueObservable<T[K]> {
-    return this._reducerMap[key].state;
+  public select<K extends keyof T, U>(key: K, map: (s: T[K]) => U): IObservable<U>;
+  public select<K extends keyof T>(key: K): IValueObservable<T[K]>;
+  public select<K extends keyof T>(key: K, subs?: (s: T[K]) => unknown): IValueObservable<unknown> | IObservable<unknown> {
+    if (!subs) return this._reducerMap[key].state;
+    else return this._reducerMap[key].state.pipe(
+      select(subs, deepEqual as unknown as (a: unknown, b: unknown) => boolean));
+  }
+
+  public subscribe<K extends keyof T>(key: K, observer: (state: T[K]) => unknown): ISubscription {
+    return this.select(key).subscribe({ next: observer });
   }
 
   public reset<K extends keyof T>(key: K, newState: T[K]): void {
     this._reducerMap[key].resetState(newState);
   }
 
-  public dispatch(action: Action): void {
-    for (const key in this._reducerMap) {
-      this._reducerMap[key].apply(action);
-    }
+  public dispatch(action: Action): Promise<void> {
+    return new Promise((resolve) => {
+      for (const key in this._reducerMap) {
+        try {
+          this._reducerMap[key].apply(action);
+        } catch (err) {
+          DnLogger.error(`Error in reducer ${key}: ${err.message}`, err);
+        }
+      }
+      resolve();
+    });
   }
 
 

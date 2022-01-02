@@ -1,11 +1,11 @@
 /** Object that handles notifications */
 export interface IObserver<T> {
   /** Notify observer of a new value */
-  next(value: T): void | Promise<void>;
+  next(value: T): unknown | Promise<unknown>;
   /** Notify observer of an error */
-  error(error: Error): void | Promise<void>;
+  error(error: Error): unknown | Promise<unknown>;
   /** Notify observer has completed */
-  complete(): void | Promise<void>;
+  complete(): unknown | Promise<unknown>;
 }
 
 /** Allow to cancel a subscription */

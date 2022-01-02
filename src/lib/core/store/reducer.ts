@@ -2,7 +2,10 @@
 import type { ActionReducer, Action, ActionAnyCreator, ActionPayload, ActionPayloadCreator, ActionCreator, JSONObject } from './models.ts';
 import { IValueObservable } from '../reactive/models.ts';
 import { ValueSubject } from '../reactive/value-subject.ts';
-import { deepFreeze } from './utils.ts';
+import {
+  deepEqual,
+  deepFreeze,
+} from './utils.ts';
 
 export class Reducer<T extends JSONObject> {
   private readonly reducers: ActionReducer<T>[];
@@ -19,7 +22,7 @@ export class Reducer<T extends JSONObject> {
   }
 
   public constructor(state: T, ...reducers: ActionReducer<T>[]) {
-    this._state = new ValueSubject(state);
+    this._state = new ValueSubject(deepFreeze(state));
     this.reducers = reducers;
   }
 
@@ -27,7 +30,7 @@ export class Reducer<T extends JSONObject> {
     const reducer = this.reducers.find(reducer => reducer.type === action.type);
     if (!reducer) return;
     const newState = reducer.apply(this._state.value, action);
-    if (newState === this._state.value) return;
+    if (deepEqual(newState, this._state.value)) return;
     this._state.next(deepFreeze(newState));
   }
 

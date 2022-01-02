@@ -55,6 +55,7 @@ export function map<T, U>(mapper: (value: T) => U): IPipeable<T, U> {
   };
 }
 
+/** Return only new values */
 export function distinctUntilChanged<T>(comparer: (a?: T, b?: T) => boolean): IPipeable<T, T> {
   return (observable: IObservable<T>): IObservable<T> => {
     const obs = new Subject<T>();
@@ -68,6 +69,32 @@ export function distinctUntilChanged<T>(comparer: (a?: T, b?: T) => boolean): IP
         }
 
         lastValue = value;
+      },
+      error: (error) => {
+        obs.error(error);
+      },
+      complete: () => {
+        obs.complete();
+      }
+    });
+
+    return obs;
+  };
+}
+
+/** Map result and return only new values */
+export function select<T, U>(selector: (value: T) => U, comparer?: (a?: U, b?: U) => boolean): IPipeable<T, U> {
+  return (observable: IObservable<T>): IObservable<U> => {
+    const obs = new Subject<U>();
+
+    let lastValue: U | undefined;
+
+    observable.subscribe({
+      next: (value) => {
+        const nextValue = selector(value);
+        const isNew = comparer ? !comparer(lastValue, nextValue) : lastValue !== nextValue;
+
+        if (isNew) { obs.next(nextValue); }
       },
       error: (error) => {
         obs.error(error);
