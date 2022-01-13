@@ -1,7 +1,9 @@
 import type { Type } from "../../../utils/types.ts";
-import type { DnElement, ElemDefinition } from "./dn-element.ts";
+import type { DnElement } from "./dn-element.ts";
 
 import { DnEvents } from '../events/__.ts';
+import { isElemDefinition } from './guards.ts';
+import { ElemDefinition } from './models.ts';
 
 /** Handler for custom web components initialization */
 export class IDenoNovelRegistry {
@@ -12,14 +14,25 @@ export class IDenoNovelRegistry {
   /** Defines if initialization is completed */
   private _hasInit = false;
 
-  /** register a new element */
-  public register<T extends DnElement<T>>(elem: Type<T>): void {
+  /**
+   * Register a new custom component
+   *
+   * @param elem The element to get the definition for
+   */
+  public register<T extends DnElement<T>>(elem: Type<T>): void
+  /**
+   * Register a new custom component
+   *
+   * @param elem The definition of the element to register
+   */
+  public register<T extends DnElement<T>>(elem: ElemDefinition<T>): void
+  public register<T extends DnElement<T>>(elem: Type<T> | ElemDefinition<T>): void {
 
     // Get the definition
-    const definition = elem.prototype.constructor.definition;
+    const definition = isElemDefinition(elem) ? elem : elem.prototype.constructor.definition;
 
     if (!definition) {
-      throw new Error(`Element ${elem.name} has no definition`);
+      throw new Error(`Element ${(elem as unknown as Type<T>).name} has no definition`);
     }
 
     // Check if the definition is valid
