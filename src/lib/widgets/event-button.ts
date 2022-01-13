@@ -1,5 +1,4 @@
 import {
-  arrayAttr,
   booleanAttr,
   DnElement,
   DnRegistry,
@@ -19,7 +18,7 @@ export class DnEventButton extends DnElement<DnEventButton> {
   }
 
   protected render(): RenderResult {
-    const btn = htmlParser<HTMLButtonElement>(`
+    const btn = htmlParser<HTMLButtonElement>(/*html*/`
       <button ${this.disabled}>
         ${this.text}
       </button>
@@ -39,10 +38,10 @@ export class DnEventButton extends DnElement<DnEventButton> {
 DnRegistry.register({
   constructor: DnEventButton,
   tagName: 'dn-event-button',
+  description: 'A button that triggers an event',
   attr: [
-    stringAttr('text', 'Button'),
-    stringAttr('event', ''),
-    booleanAttr('disabled', false),
-    arrayAttr<string>('extraClasses'),
+    stringAttr('text', 'Button', true, 'Button text'),
+    stringAttr('event', '', true, 'Event to trigger'),
+    booleanAttr('disabled', false, true, 'Disabled state')
   ]
 });

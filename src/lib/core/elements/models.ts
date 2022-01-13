@@ -13,6 +13,8 @@ export interface ElemDefinition<T extends DnElement<T>> {
   constructor: Type<T>;
   /** Element attributes */
   attr: DnAttrDefinition<any>[];
+  /** Description for component */
+  description?: string;
 }
 
 /** Attribute details */

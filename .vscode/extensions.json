@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "denoland.vscode-deno",
+    "editorconfig.editorconfig",
+    "tobermory.es6-string-html",
+    "mike-co.import-sorter"
+  ]
+}

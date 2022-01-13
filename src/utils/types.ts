@@ -8,3 +8,22 @@ export type Type<T> = new (...args: any[]) => T;
 
 /** Key names for object */
 export type Keys<T> = Extract<keyof T, string>;
+
+/** Generic result */
+export type Result<T> = ResultSuccess<T> | ResultError;
+
+export type ResultSuccess<T> = {
+  success: true;
+  data: T;
+};
+
+export type ResultError = {
+  success: false;
+  error: string;
+  code: number;
+};
+
+export interface RunOptions {
+  workingDir: string;
+  env?: { [key: string]: string };
+}
