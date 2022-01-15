@@ -1,5 +1,5 @@
 import { join } from '../_deps.ts';
-import { DenoNovel } from '../app/deno-novel.ts';
+import { DenoNovel } from '../shared/deno-novel.ts';
 
 /** Get full path from relative path */
 export function getFullPath(path: string): string {

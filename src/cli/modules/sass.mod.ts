@@ -1,4 +1,4 @@
-import { compileSass } from '../../app/integration/sass/sass.ts';
+import { compileSass } from '../../shared/integration/sass/sass.ts';
 import * as Console from '../utils/console.ts';
 
 export async function runSassCompile(input: string, output: string, workingDir: string, compress: boolean, sourceMap: boolean): Promise<number> {

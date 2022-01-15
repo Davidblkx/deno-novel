@@ -2,12 +2,12 @@ import {
   Args,
   parse,
 } from './src/_deps.ts';
-import { DenoNovel } from './src/app/deno-novel.ts';
 import {
   commandMap,
   HelpCommand,
 } from './src/cli/_.ts';
 import * as Console from './src/cli/utils/console.ts';
+import { DenoNovel } from './src/shared/deno-novel.ts';
 
 import type { CliCommand } from "./src/cli/models.ts";
 const cmdList = [...commandMap.values(), HelpCommand];

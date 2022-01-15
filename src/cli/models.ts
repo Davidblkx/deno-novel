@@ -1,5 +1,5 @@
 import type { Args } from '../_deps.ts';
-import type { IDenoNovel } from '../app/state.model.ts';
+import type { IDenoNovel } from '../shared/state.model.ts';
 
 export interface CliCommand {
   name: string;

@@ -6,5 +6,8 @@
   ],
   "styles": [
     "./src/styles/index.ts"
-  ]
+  ],
+  "apps": {
+    "server-front": "./src/server/front/index.ts"
+  }
 }

@@ -1,4 +1,4 @@
-import type { IDenoNovel } from "../../app/state.model.ts";
+import type { IDenoNovel } from "../../shared/state.model.ts";
 import * as Console from '../utils/console.ts';
 
 export function printVersion({ version }: IDenoNovel): number {
