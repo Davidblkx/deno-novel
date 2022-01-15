@@ -22,6 +22,9 @@ export async function runCommand(args: string[], workingDir: string, env?: { [ke
     cmd: args,
     cwd: workingDir,
     env: env,
+    stdin: 'piped',
+    stdout: 'piped',
+    stderr: 'piped',
   });
 
   return {

@@ -15,6 +15,8 @@ export interface ElemDefinition<T extends DnElement<T>> {
   attr: DnAttrDefinition<any>[];
   /** Description for component */
   description?: string;
+  /** Skip component when showing documentation */
+  skipDocs?: boolean;
 }
 
 /** Attribute details */

@@ -11,5 +11,21 @@
       "desc": "run my app.ts file and watch for changes",
       "watch": true
     }
-  }
+  },
+  "watcher": {
+    "interval": 350,
+    "exts": [
+      "js",
+      "jsx",
+      "ts",
+      "tsx",
+      "json"
+    ],
+    "match": [ "src/**/*" ],
+    "skip": [
+      "src/lib/**/*",
+      "src/server/front/**/*"
+    ]
+  },
+  "watch": false
 }

@@ -1,15 +1,16 @@
 {
   "title": "Deno Novel",
   "port": 8080,
-  "docs": "./docs",
-  "public": "./public",
+  "docs": "docs",
+  "public": "dist",
+  "local": true,
   "components": {
-    "Widgets": "./src/lib/widgets/index.ts"
+    "widgets": "src/lib/widgets/index.ts"
   },
   "styles": {
-    "styles": "./src/styles/index.ts"
+    "main": "styles/main.scss"
   },
   "apps": {
-    "server-front": "./src/server/front/index.ts"
+    "server-front": "src/server/front/index.ts"
   }
 }
