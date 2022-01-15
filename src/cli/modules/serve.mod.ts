@@ -1,16 +1,17 @@
 import { startServer } from '../../server/server.ts';
 import { serverEvents } from '../../shared/server-events.ts';
+import { IDenoNovel } from '../../shared/state.model.ts';
 import * as Console from '../utils/console.ts';
 
-let PORT = 8080;
+let PORT = 0;
 
-export async function runServer(port: number): Promise<number> {
-  PORT = port;
-  Console.info(`Starting server on port ${port}...`);
+export async function runServer(dn: IDenoNovel, port?: number): Promise<number> {
+  PORT = port ?? dn.app.port;
+  Console.info(`Starting server on port ${PORT}...`);
 
   initEvents();
 
-  const result = await startServer(port);
+  const result = await startServer(dn, port);
 
   if (result === 0) return 0;
 

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://deno.land/x/denon@2.4.9/schema.json",
+  "scripts": {
+    "start": {
+      "cmd": "deno run -A app.ts serve",
+      "desc": "run my app.ts file",
+      "watch": false
+    },
+    "watch": {
+      "cmd": "deno run -A app.ts serve",
+      "desc": "run my app.ts file and watch for changes",
+      "watch": true
+    }
+  }
+}

@@ -10,7 +10,6 @@ const portOption: CliOption<number> = {
   description: 'The port to run the server on.',
   required: false,
   hasValue: true,
-  defaultValue: 8080,
   shortName: 'p'
 }
 
@@ -19,8 +18,8 @@ export const ServeCommand: CliCommand = {
   description: 'Start the developement server',
   args: [],
   options: [portOption],
-  action: (_, options) => {
-    const port = getOptionValue(options, portOption, 8080);
-    return runServer(port);
+  action: (_, options, dn) => {
+    const port = getOptionValue(options, portOption);
+    return runServer(dn, port);
   }
 }

@@ -8,8 +8,10 @@ import {
 } from './src/cli/_.ts';
 import * as Console from './src/cli/utils/console.ts';
 import { DenoNovel } from './src/shared/deno-novel.ts';
+import { initState } from './src/shared/internal.state.ts';
 
 import type { CliCommand } from "./src/cli/models.ts";
+
 const cmdList = [...commandMap.values(), HelpCommand];
 const args = parse(Deno.args);
 
@@ -29,6 +31,7 @@ const cmd = cmdList.find(e => e.name === commandName);
 if (!commandName) {
   await runCommand(HelpCommand, [], args);
 } else if (cmd) {
+  await initState();
   await runCommand(cmd, args._.slice(1), args);
 } else {
   Console.error(`Command ${commandName} not found`);
