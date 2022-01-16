@@ -23,18 +23,28 @@ export async function runServer(dn: IDenoNovel, port?: number): Promise<number> 
 }
 
 function initEvents(): void {
-  serverEvents.on('serverStarted', port => {
-    PORT = port;
-    printState();
+  serverEvents.on('serverError', error => {
+    if (!error.message) return;
+
+    if (error.context && error.context.matched.length > 0) {
+      const path = error.context.matched[0].path;
+      if (path === '/sse') return;
+      Console.error(`${path}: ${error.message}`);
+      return;
+    }
+
+    Console.error(`Server error: ${error.message}`);
   });
 
-  serverEvents.on('serverError', error => {
-    Console.error(`Server error: ${error.message}`);
+  serverEvents.on('compileComplete', success => {
+    printState(!success);
   });
 }
 
 function printState(error?: boolean) {
   if (!error) console.clear();
   Console.info('\nServer running on:')
-  Console.warn(`  http://localhost:${PORT}`);
+  Console.success(`  http://localhost:${PORT}`);
+  if (error)
+    Console.warn('\nErrors found, please fix them before continuing.');
 }

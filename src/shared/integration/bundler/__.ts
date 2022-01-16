@@ -4,7 +4,7 @@ import type { Result } from "../../../utils/types.ts";
 
 export async function bundleJs(input: string, out: string, cwd: string): Promise<Result<string>> {
   const args = ['deno', 'bundle', '--unstable', '--config', '.\\deno.jsonc', input, out];
-  const { status } = await runCommand(args, cwd);
+  const { status, output } = await runCommand(args, cwd);
 
   if (status.success) {
     return {
@@ -15,7 +15,7 @@ export async function bundleJs(input: string, out: string, cwd: string): Promise
     return {
       success: false,
       code: status.code,
-      error: 'JS bundling failed',
+      error: output,
     };
   }
 }

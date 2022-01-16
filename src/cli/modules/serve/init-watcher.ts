@@ -29,23 +29,27 @@ export async function initWatcher() {
 
 
       if (stylesToUpdate.length) {
+        serverEvents.emit('startCompile');
         Console.debug('Change detected in styles:');
         for (const s of stylesToUpdate) {
           Console.debug(`  ${s}`);
         }
         Console.info('Updating styles...');
-        await initStyles();
+        const res = await initStyles();
         serverEvents.emit('serverRefresh', 'styles');
+        serverEvents.emit('compileComplete', res);
       }
 
       if (scriptsToUpdate.length) {
+        serverEvents.emit('startCompile');
         Console.debug('Change detected in scripts:');
         for (const s of scriptsToUpdate) {
           Console.debug(`  ${s}`);
         }
         Console.info('Updating sources...');
-        await initBundle();
+        const res = await initBundle();
         serverEvents.emit('serverRefresh', 'scripts');
+        serverEvents.emit('compileComplete', res);
       }
     });
   }

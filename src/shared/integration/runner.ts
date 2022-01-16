@@ -1,5 +1,5 @@
 export interface RunResult {
-  output: Uint8Array;
+  output: string;
   status: Deno.ProcessStatus;
 }
 
@@ -27,8 +27,13 @@ export async function runCommand(args: string[], workingDir: string, env?: { [ke
     stderr: 'piped',
   });
 
+  const status = await denoRun.status();
+  const rawOutpur = await denoRun.output();
+  const rawError = await denoRun.stderrOutput();
+
   return {
-    output: await denoRun.output(),
-    status: await denoRun.status(),
+    output: new TextDecoder()
+      .decode(status.code === 0 ? rawOutpur : rawError),
+    status,
   }
 }

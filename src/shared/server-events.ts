@@ -15,6 +15,8 @@ export interface EventsMap {
   serverStarted: number;
   serverError: ErrorEvent;
   serverRefresh: RefreshType;
+  startCompile: never;
+  compileComplete: boolean;
 }
 
 export const serverEvents = new EventsHandler<EventsMap>();
