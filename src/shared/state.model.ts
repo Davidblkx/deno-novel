@@ -13,6 +13,8 @@ export interface IAppSettings {
   components: { [key: string]: string };
   styles: { [key: string]: string };
   apps: { [key: string]: string };
+  prod?: boolean;
+  local?: boolean;
 }
 
 /** Common state for DenoNovel */

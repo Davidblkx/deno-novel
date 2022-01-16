@@ -27,6 +27,10 @@ function initEvents(): void {
     PORT = port;
     printState();
   });
+
+  serverEvents.on('serverError', error => {
+    Console.error(`Server error: ${error.message}`);
+  });
 }
 
 function printState(error?: boolean) {

@@ -1,1 +1,1 @@
-console.log('batatas');
+console.log('batatas', Math.random());

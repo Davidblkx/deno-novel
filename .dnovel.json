@@ -11,6 +11,7 @@
     "main": "styles/main.scss"
   },
   "apps": {
-    "server-front": "src/server/front/index.ts"
+    "server-front": "src/server/front/index.ts",
+    "server-reload": "src/server/front/reload.ts"
   }
 }

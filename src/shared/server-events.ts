@@ -9,9 +9,12 @@ export interface ErrorEvent {
   message: string;
 }
 
+export type RefreshType = 'styles' | 'scripts' | 'all';
+
 export interface EventsMap {
   serverStarted: number;
   serverError: ErrorEvent;
+  serverRefresh: RefreshType;
 }
 
 export const serverEvents = new EventsHandler<EventsMap>();

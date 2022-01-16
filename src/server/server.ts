@@ -9,7 +9,7 @@ import { registerMiddleware } from './middleware/__.ts';
 import type { ServerState, Server } from './models/__.ts';
 export async function startServer(dn: IDenoNovel, port?: number): Promise<0 | unknown> {
   const app = new oak.Application<ServerState>({
-    logErrors: false,
+    logErrors: true,
   });
 
   // Copy settings to server state
@@ -36,6 +36,7 @@ export async function startServer(dn: IDenoNovel, port?: number): Promise<0 | un
 function registerEvents(app: Server): void {
   // deno-lint-ignore no-explicit-any
   app.addEventListener('error', (event: any) => {
+    console.warn(`Server error: ${event}`);
     serverEvents.emit('serverError', event);
   });
 
